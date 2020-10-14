@@ -10,7 +10,8 @@
   },
   "author": "Georgy Goncharenko",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "dev": "nodemon app.js"
   },
   "devDependencies": {
     "eslint": "^7.11.0",
