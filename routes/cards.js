@@ -7,8 +7,10 @@ const jsonDataPath = path.join(__dirname, '..', 'data', 'cards.json');
 router.get('/cards', (req, res) => {
   readFile(jsonDataPath)
     .then((data) => res.send(data))
-    // eslint-disable-next-line no-console
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log('err = ', err.message);
+      res.status(500).send({ message: 'Ошибка на сервере' });
+    });
 });
 
 module.exports = router;
