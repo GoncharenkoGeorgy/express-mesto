@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const userSchema = new Schema ({
+const userSchema = new Schema({
   name: {
     type: String,
     minlength: 2,
@@ -17,8 +17,8 @@ const userSchema = new Schema ({
     type: String,
     required: true,
     validate: {
-      validator(v){
-        return /https?:\/\/(www\.)?/.test(v);
+      validator(v) {
+        return /^https?:\/\/(www\.)?[\w-.~:\/?#\[\]@!$&'()*+,;=]+#?/.test(v);
       },
       message: 'Ссылка введена неверно',
     }

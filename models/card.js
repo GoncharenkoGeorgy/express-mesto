@@ -1,9 +1,9 @@
 const { Schema, model } = require('mongoose');
 const mongoose = require('mongoose');
 
-const cardSchema = new Schema ({
-  likes:{
-    type: Array,
+const cardSchema = new Schema({
+  likes: {
+    type: [{type: Schema.Types.ObjectId, ref: 'user'}],
     default: []
   },
   name: {
@@ -16,8 +16,8 @@ const cardSchema = new Schema ({
     type: String,
     required: true,
     validate: {
-      validator(v){
-        return /https?:\/\/(www\.)?/.test(v);
+      validator(v) {
+        return /^https?:\/\/(www\.)?[\w-.~:\/?#\[\]@!$&'()*+,;=]+#?/.test(v);
       },
       message: 'Ссылка введена неверно',
     }

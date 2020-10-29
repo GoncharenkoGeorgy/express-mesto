@@ -10,7 +10,7 @@ const getUsers = (req, res) => {
 };
 
 const getUser = (req, res) => {
-  User.findById (req.params.id)
+  User.findById(req.params.id)
     .then((user) => {
       if (!user) {
         return res.status(404).send({ message: 'Нет пользователя с таким id' });
@@ -27,8 +27,8 @@ const getUser = (req, res) => {
 };
 
 const createUser = (req, res) => {
-  const { name, about, avatar} = req.body;
-  User.create({ name, about, avatar})
+  const { name, about, avatar } = req.body;
+  User.create({ name, about, avatar })
     .then(user => res.send({ data: user }))
     // данные не записались, вернём ошибку
     .catch((err) => {
@@ -43,15 +43,15 @@ const createUser = (req, res) => {
 const updateProfile = (req, res) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(
-    req.params.id,
+    req.user._id,
     { name, about },
     // Передадим объект опций:
     {
-        new: true, // обработчик then получит на вход обновлённую запись
-        runValidators: true, // данные будут валидированы перед изменением
-        upsert: true // если пользователь не найден, он будет создан
+      new: true, // обработчик then получит на вход обновлённую запись
+      runValidators: true, // данные будут валидированы перед изменением
+      upsert: true // если пользователь не найден, он будет создан
     }
-)
+  )
     .then(user => res.send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -63,24 +63,24 @@ const updateProfile = (req, res) => {
 }
 
 const updateAvatar = (req, res) => {
-  const { avatar} = req.body;
+  const { avatar } = req.body;
   User.findByIdAndUpdate(
-    req.params.id,
+    req.user._id,
     { avatar },
     {
-        new: true,
-        runValidators: true,
-        upsert: true
+      new: true,
+      runValidators: true,
+      upsert: true
     }
-)
-  .then(user => res.send({ data: user }))
-  .catch((err) => {
-    if (err.name === 'ValidationError') {
-      res.status(400).send({ message: 'Переданы некорректные данные' });
-    } else {
-      res.status(500).send({ message: 'Произошла ошибка на сервере' })
-    }
-  });
+  )
+    .then(user => res.send({ data: user }))
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        res.status(400).send({ message: 'Переданы некорректные данные' });
+      } else {
+        res.status(500).send({ message: 'Произошла ошибка на сервере' })
+      }
+    });
 };
 
 module.exports = { getUsers, getUser, createUser, updateProfile, updateAvatar };
