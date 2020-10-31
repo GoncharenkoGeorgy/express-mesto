@@ -4,33 +4,33 @@ const mongoose = require('mongoose');
 const cardSchema = new Schema({
   likes: {
     type: [{ type: Schema.Types.ObjectId, ref: 'user' }],
-    default: []
+    default: [],
   },
   name: {
     type: String,
     minlength: 2,
     maxlength: 30,
-    required: true
+    required: true,
   },
   link: {
     type: String,
     required: true,
     validate: {
       validator(v) {
-        return /^https?:\/\/(www\.)?[\w-.~:\/?#\[\]@!$&'()*+,;=]+#?$/.test(v);
+        return /^https?:\/\/(www\.)?[\w-.~:/?#[\]@!$&'()*+,;=]+#?$/.test(v);
       },
       message: 'Ссылка введена неверно',
-    }
+    },
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'user'
+    ref: 'user',
   },
   createdAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 module.exports = model('card', cardSchema);

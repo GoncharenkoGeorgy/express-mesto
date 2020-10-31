@@ -1,4 +1,4 @@
-const Card = require('../models/card')
+const Card = require('../models/card');
 
 const getCards = (req, res) => {
   Card.find({})
@@ -13,16 +13,16 @@ const createCard = (req, res) => {
   const { name, link } = req.body;
   const { _id } = req.user;
   Card.create({ name, link, owner: _id })
-    .then(card => res.send({ data: card }))
+    .then((card) => res.send({ data: card }))
     // данные не записались, вернём ошибку
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(400).send({ message: 'Переданы некорректные данные' });
       } else {
-        res.status(500).send({ message: 'Произошла ошибка на сервере' })
+        res.status(500).send({ message: 'Произошла ошибка на сервере' });
       }
     });
-}
+};
 
 const deleteCard = (req, res) => {
   Card.findByIdAndRemove(req.params.id)
@@ -71,5 +71,6 @@ const dislikeCard = (req, res) => {
     });
 };
 
-
-module.exports = { getCards, createCard, deleteCard, likeCard, dislikeCard };
+module.exports = {
+  getCards, createCard, deleteCard, likeCard, dislikeCard,
+};

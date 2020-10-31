@@ -9,11 +9,6 @@
         ]
       }
     ],
-    "no-console": "off",
-    //"no-console": ["error", { "allow": ["warn", "error"] }]
-    "linebreak-style": [
-      "error",
-      "window"
-    ]
+    "no-console": "off"
   }
 }

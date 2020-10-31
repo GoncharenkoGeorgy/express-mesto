@@ -1,12 +1,14 @@
-const User = require('../models/user')
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-constant-condition */
+const User = require('../models/user');
 
 const getUsers = (req, res) => {
   User.find({})
-    .then(users => res.status(200).send(users))
+    .then((users) => res.status(200).send(users))
     .catch((err) => {
       console.error('err = ', err);
       res.status(500).send({ message: 'Произошла ошибка на сервере' });
-    })
+    });
 };
 
 const getUser = (req, res) => {
@@ -18,7 +20,7 @@ const getUser = (req, res) => {
       return res.send(user);
     })
     .catch((err) => {
-      if (err.name = 'CastError') {
+      if (err.name === 'CastError') {
         res.status(404).send({ message: 'Id введен неправильно' });
       } else {
         res.status(500).send({ message: 'Произошла ошибка на сервере' });
@@ -29,16 +31,16 @@ const getUser = (req, res) => {
 const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
-    .then(user => res.send({ data: user }))
+    .then((user) => res.send({ data: user }))
     // данные не записались, вернём ошибку
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(400).send({ message: 'Переданы некорректные данные' });
       } else {
-        res.status(500).send({ message: 'Произошла ошибка на сервере' })
+        res.status(500).send({ message: 'Произошла ошибка на сервере' });
       }
     });
-}
+};
 
 const updateProfile = (req, res) => {
   const { name, about } = req.body;
@@ -49,18 +51,18 @@ const updateProfile = (req, res) => {
     {
       new: true, // обработчик then получит на вход обновлённую запись
       runValidators: true, // данные будут валидированы перед изменением
-      upsert: true // если пользователь не найден, он будет создан
-    }
+      upsert: true, // если пользователь не найден, он будет создан
+    },
   )
-    .then(user => res.send({ data: user }))
+    .then((user) => res.send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(400).send({ message: 'Переданы некорректные данные' });
       } else {
-        res.status(500).send({ message: 'Произошла ошибка на сервере' })
+        res.status(500).send({ message: 'Произошла ошибка на сервере' });
       }
     });
-}
+};
 
 const updateAvatar = (req, res) => {
   const { avatar } = req.body;
@@ -70,17 +72,19 @@ const updateAvatar = (req, res) => {
     {
       new: true,
       runValidators: true,
-      upsert: true
-    }
+      upsert: true,
+    },
   )
-    .then(user => res.send({ data: user }))
+    .then((user) => res.send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(400).send({ message: 'Переданы некорректные данные' });
       } else {
-        res.status(500).send({ message: 'Произошла ошибка на сервере' })
+        res.status(500).send({ message: 'Произошла ошибка на сервере' });
       }
     });
 };
 
-module.exports = { getUsers, getUser, createUser, updateProfile, updateAvatar };
+module.exports = {
+  getUsers, getUser, createUser, updateProfile, updateAvatar,
+};
