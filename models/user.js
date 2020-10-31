@@ -18,7 +18,7 @@ const userSchema = new Schema({
     required: true,
     validate: {
       validator(v) {
-        return /^https?:\/\/(www\.)?[\w-.~:\/?#\[\]@!$&'()*+,;=]+#?/.test(v);
+        return /^https?:\/\/(www\.)?[\w-.~:\/?#\[\]@!$&'()*+,;=]+#?$/.test(v);
       },
       message: 'Ссылка введена неверно',
     }
